@@ -125,16 +125,20 @@ for i in range(N):
 # resampled according to their weights.
 # Also, DO NOT MODIFY p.
 
+# Normalize the weights
 sum_weights = sum(w)
 normalized_weights = [weight / sum_weights for weight in w]
 
+
+# Resample particles
 p3 = []
+index = int(random.random() * N)
+beta = 0.0
+max_weight = max(normalized_weights)
 for i in range(N):
-    currentSum = 0.
-    seek = random.random()
-    for j in range(N):
-        currentSum += normalized_weights[j]
-        if seek < currentSum:
-            p3.append(p[j])
-            break
+    beta += random.random()  *2.0*  max_weight
+    while beta > normalized_weights[index]:
+        beta -= normalized_weights[index]
+        index = (index + 1) % N
+    p3.append(p[index])
 print(p3)
